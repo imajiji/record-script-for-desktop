@@ -1,0 +1,20 @@
+#!/bin/bash
+wget -q -O - $1|grep $2 >/dev/null 2>&1
+act_flg=$?
+ps acx|grep [c]hromium >/dev/null 2>&1
+open_flg=$?
+
+if test 0 -eq $act_flg then
+ if test 1 -eq $open_flg then
+  chromium-browser --add $1 &
+  sleep 10s
+  recordmydesktop --width 550 --height 550 -y 200 -o /home/imaji/record/`date +'%Y%m%d_%H_%M_%S'` &
+ fi
+ echo $1|mail -s $3 -aFrom:$3 $4
+else
+ if test 0 -eq $open_flg then
+  killall recordmydesktop
+  killall chromium-browse
+ fi
+ :
+fi
