@@ -20,7 +20,7 @@ do
    recordmydesktop --width 550 --height 550 -y 200 -o /home/imaji/record/`date +'%Y%m%d_%H_%M_%S'` &
   fi
 #  echo $1 | mail -s $3 -aFrom:$3 $4
- else
+# else
 #  if [ 0 = $act_flg ]; then
 #   pkill --signal=SIGINT recordmydesktop
 #   killall chromium-browse
