@@ -1,4 +1,4 @@
 *.ogv
 current-record-list.sh
 error.log
-urllist.txt
+*.txt
