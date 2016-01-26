@@ -3,10 +3,11 @@
 width=550
 height=550
 coordinate_y=200
+script_dir_path=$(dirname $(readlink -f $0))
 
 while true
 do
-  [ $# -ne 2 ] && echo "Not enough args."; exit 1
+  [ $# -ne 2 ] && exit 1
 
   urllist=$1
   target_string=$2
@@ -19,7 +20,7 @@ do
     if [ 0 -lt "$act_flg" -a 0 = "$recording_flg" ]; then
       chromium-browser --add $url &
       sleep 10s
-      recordmydesktop --width $width --height $height -y $coordinate_y -o /home/imaji/record/`date +'%Y%m%d_%H_%M_%S'` &
+      recordmydesktop --width $width --height $height -y $coordinate_y -o $script_dir_path"/"`date +'%Y%m%d_%H_%M_%S'` &
       break
     fi
 
