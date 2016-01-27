@@ -15,21 +15,21 @@ do
   chromium_flg=`pgrep -fa chromium-browse | wc -l`
 
   while read url; do
-    act_flg=`wget -q -O - "$url" | grep "$target_string" | wc -l`
 
-    if [ 0 -lt "$act_flg" -a 0 = "$recording_flg" ]; then
-      chromium-browser --add $url &
-      sleep 10s
-      recordmydesktop --width $width --height $height -y $coordinate_y -o $script_dir_path"/"`date +'%Y%m%d_%H_%M_%S'` &
+    if wget -q -O - "$url" | grep -sq "$target_string"; then
+
+      if [ 0 = "$recording_flg" ]; then
+        chromium-browser --add $url &
+        sleep 10s
+        recordmydesktop --width $width --height $height -y $coordinate_y -o $script_dir_path"/"`date +'%Y%m%d_%H_%M_%S'` &
+      fi
       break
+
     fi
 
-    if [ 0 -lt "$act_flg" -a 0 -lt "$recording_flg" ]; then
-      break
-    fi
   done < $urllist
 
-  if [ 0 = "$act_flg" -a 0 -lt "$recording_flg" -a 0 -lt "$chromium_flg" ]; then
+  if [ 0 -lt "$recording_flg" -a 0 -lt "$chromium_flg" ]; then
     pkill -f --signal=SIGINT recordmydesktop
     pkill -f chromium-browse
   fi
