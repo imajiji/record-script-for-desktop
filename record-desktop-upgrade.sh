@@ -5,14 +5,14 @@ height=550
 coordinate_y=200
 script_dir_path=$(dirname $(readlink -f $0))
 
+urllist=$1
+target_string=$2
+recording_flg=`pgrep -fa recordmydesktop | wc -l`
+chromium_flg=`pgrep -fa chromium-browse | wc -l`
+
 while true
 do
   [ $# -ne 2 ] && exit 1
-
-  urllist=$1
-  target_string=$2
-  recording_flg=`pgrep -fa recordmydesktop | wc -l`
-  chromium_flg=`pgrep -fa chromium-browse | wc -l`
 
   while read url; do
 
@@ -29,7 +29,7 @@ do
 
   done < $urllist
 
-  if [ 0 -lt "$recording_flg" -a 0 -lt "$chromium_flg" ]; then
+  if [ 0 -ne "$recording_flg" -a 0 -ne "$chromium_flg" ]; then
     pkill -f --signal=SIGINT recordmydesktop
     pkill -f chromium-browse
   fi
