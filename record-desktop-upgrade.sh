@@ -7,8 +7,8 @@ script_dir_path=$(dirname $(readlink -f $0))
 
 urllist=$1
 target_string=$2
-recording_flg=`pgrep -fa recordmydesktop | wc -l`
-chromium_flg=`pgrep -fa chromium-browse | wc -l`
+recording_flg=$(pgrep -fa recordmydesktop | wc -l)
+chromium_flg=$(pgrep -fa chromium-browse | wc -l)
 
 while true
 do
@@ -21,7 +21,7 @@ do
       if [ 0 = "$recording_flg" ]; then
         chromium-browser --add $url &
         sleep 10s
-        recordmydesktop --width $width --height $height -y $coordinate_y -o $script_dir_path"/"`date +'%Y%m%d_%H_%M_%S'` &
+        recordmydesktop --width $width --height $height -y $coordinate_y -o $script_dir_path"/"$(date +'%Y%m%d_%H%M%S') &
       fi
       break
 
