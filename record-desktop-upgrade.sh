@@ -12,7 +12,7 @@ chromium_flg=$(pgrep -fa chromium-browse | wc -l)
 
 while true
 do
-  [ $# -ne 2 ] && exit 1
+  [ $# -ne 2 ] && { echo "Not enough arguments!!"; exit 1; }
 
   while read url; do
 
@@ -23,7 +23,7 @@ do
         sleep 10s
         recordmydesktop --width $width --height $height -y $coordinate_y -o $script_dir_path"/"$(date +'%Y%m%d_%H%M%S') &
       fi
-      break
+      break 2
 
     fi
 
