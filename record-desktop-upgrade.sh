@@ -6,7 +6,7 @@ coordinate_y=200
 script_dir_path=$(dirname $(readlink -f $0))
 
 urllist=$1
-target_string=$2
+targetlist=$(cat $2 | xargs | sed -e 's/ /|/g')
 recording_flg=$(pgrep -fa recordmydesktop | wc -l)
 chromium_flg=$(pgrep -fa chromium-browse | wc -l)
 
@@ -16,7 +16,7 @@ do
 
   while read url; do
 
-    if wget -q -O - "$url" | grep -sq "$target_string"; then
+    if wget -q -O - "$url" | egrep -sq "$targetlist"; then
 
       if [ 0 = "$recording_flg" ]; then
         chromium-browser --add $url &
