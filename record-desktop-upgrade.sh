@@ -1,16 +1,18 @@
 #!/bin/bash
 
+[ $# -ne 2 ] && { echo "Not enough arguments!!"; exit 1; }
+[ ! -f $1 -o ! -f $2 ] && { echo "Not files!!"; exit 2; }
+
+urllist=$1
+targetlist=$(cat $2 | xargs | sed -e 's/ /|/g')
+
 width=550
 height=550
 coordinate_y=200
 script_dir_path=$(dirname $(readlink -f $0))
 
-urllist=$1
-targetlist=$(cat $2 | xargs | sed -e 's/ /|/g')
-
 while true
 do
-  [ $# -ne 2 ] && { echo "Not enough arguments!!"; exit 1; }
 
   recording_flg=$(pgrep -fa recordmydesktop | wc -l)
   chromium_flg=$(pgrep -fa chromium-browse | wc -l)
