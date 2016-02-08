@@ -1,5 +1,15 @@
 #!/usr/bin/env bats
 
+setup() {
+  mkdir test_dir
+  touch test_file
+}
+
+teardown() {
+  rmdir test_dir
+  rm test_file
+}
+
 @test "When no argument provided, it should fail with exit code 1 and print error message" {
   run ./record-desktop-upgrade.sh
   [ "$status" -eq 1 ]
