@@ -5,7 +5,6 @@
 
 urllist=$1
 targetlist=$(cat $2 | xargs | sed -e 's/ /|/g')
-
 width=550
 height=550
 coordinate_y=200
@@ -13,7 +12,7 @@ script_dir_path=$(dirname $(readlink -f $0))
 
 while true
 do
-
+sleep 2m
   recording_flg=$(pgrep -fa recordmydesktop | wc -l)
   chromium_flg=$(pgrep -fa chromium-browse | wc -l)
 
@@ -26,7 +25,8 @@ do
         sleep 10s
         recordmydesktop --width $width --height $height -y $coordinate_y -o $script_dir_path"/"$(date +'%Y%m%d_%H%M%S') &
       fi
-      break 2
+      sleep 1m
+      continue 2
 
     fi
 
@@ -36,5 +36,6 @@ do
     pkill -f --signal=SIGINT recordmydesktop
     pkill -f chromium-browse
   fi
-  sleep 5m
+  sleep 1m
+
 done
